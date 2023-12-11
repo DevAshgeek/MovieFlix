@@ -1,0 +1,346 @@
+html,
+body {
+  background-color: #151414;
+  padding: 0;
+  margin: 0;
+  font-family: Netflix Sans, Helvetica Neue, Segoe UI, Roboto, Ubuntu,
+    sans-serif;
+  /* font-family: Helvetica, Arial, sans-serif; */
+}
+
+.container {
+  width: 100%;
+  max-width: 1560px;
+  margin: 0 auto;
+}
+
+*::-webkit-scrollbar {
+  display: none;
+}
+
+/* header CSS */
+header {
+  background-color: transparent;
+  position: fixed;
+  z-index: 100;
+  left: 0;
+  top: 0;
+  width: 100%;
+  transition: all ease 600ms;
+}
+
+header.black-bg {
+  background-color: rgb(20, 20, 20);
+}
+
+.header-cont {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.left-cont,
+.right-cont {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.right-cont {
+  max-width: 40;
+}
+
+.main-nav {
+  list-style: none;
+  display: inline-flex;
+  flex-direction: row;
+}
+.nav-item {
+  margin-right: 20px;
+  color: white;
+  font-weight: 550;
+}
+.nav-item:hover {
+  color: rgb(255, 42, 42);
+}
+
+.right-nav {
+  list-style: none;
+  display: inline-flex;
+  flex-direction: row;
+}
+.right-navitem {
+  margin-right: 22px;
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  padding: 1.5px 1.5px 1px;
+}
+
+.right-navitem:hover {
+  background-color: rgb(255, 42, 42);
+  border-radius: 0.2px 10px 10px;
+}
+.brand-logo {
+  max-width: 120px;
+  border-radius: 5px;
+}
+
+.user-logo {
+  margin: -1px 0 6px;
+  border-radius: 14px;
+}
+
+/* Movies Section */
+
+#movies-container {
+  position: relative;
+  top: 0;
+}
+
+.movie-section {
+  margin-bottom: 41px 0;
+  position: relative;
+  top: 0px;
+  display: flex;
+  flex-direction: column;
+}
+
+.movies-section-heading {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: white;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.explore-nudge {
+  color: #54b9c5;
+  font-size: 12px;
+  display: none;
+}
+
+.movies-section-heading:hover .explore-nudge {
+  display: inline-block;
+  transform: scale(0.99);
+}
+
+.movies-row-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.movies-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap; /* Ensure that items stay in a single line */
+}
+
+.category-container {
+  width: 100vw;
+  height: fit-content;
+  display: none;
+}
+
+.movie-item {
+  width: 360px;
+  position: relative;
+  top: 0px;
+  object-fit: contain;
+  margin-right: 10px;
+  border-radius: 4px;
+}
+
+.movie-item-img {
+  border-radius: 4px;
+  width: inherit;
+}
+
+.trailer-container {
+  display: flex;
+  justify-content: center;
+  width: 100vw; /* Take full width of the viewport */
+  height: 40vw; /* Set the height based on the 16:9 aspect ratio (100 / 16 * 9) */
+  overflow: hidden;
+}
+
+.youtube-video {
+  /* width: 100%; */
+  /* max-width: 100vw; */
+  /* height: 100%; */
+  /* max-height: 56.25vw; */
+  width: 100%;
+  height: 100%;
+  /* object-fit: cover; */
+  object-fit: contain;
+}
+
+.youtube-video iframe {
+  border: none;
+  outline: none;
+}
+
+.movie-btn-cont {
+  z-index: 1;
+  position: absolute;
+  bottom: -5px;
+  left: 25px;
+}
+
+.movie-btn-cont .action-button {
+  padding: 8px 20px;
+  margin-right: 9px;
+  border-radius: 4px;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.movie-btn-a {
+  color: #fff;
+  text-decoration: none;
+}
+
+/* padding: 8px 23px;
+  margin-right: 11px;
+  border-radius: 4px; */
+/* aspect-ratio: 16 / 9; */
+
+.movie-item:hover {
+  z-index: 1;
+  transform: scale(1.2, 1.2);
+  overflow-x: visible;
+  transition: transform linear 300ms;
+}
+
+.movie-item:hover .movie-btn-cont {
+  transform: scale(0.83, 0.83);
+  transition: transform linear 300ms;
+  position: absolute;
+  bottom: 10px;
+  left: 22px;
+}
+
+/* banner section CSS */
+
+.banner-section {
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 90vh;
+  position: relative;
+  padding-top: 80px;
+}
+.banner-content {
+  display: flex;
+  flex-direction: column;
+  padding-top: 70px;
+  margin-left: 5px;
+}
+
+.banner-title {
+  color: white;
+  font-size: 84px;
+  margin: 0;
+  line-height: 1.1;
+  margin-bottom: 16px;
+  max-width: 40%;
+}
+
+.banner-info {
+  margin-bottom: 14px;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.5;
+  color: rgb(249, 252, 83);
+}
+
+.banner-overview {
+  font-size: 16.4px;
+  color: white;
+  line-height: 1.3;
+  max-width: 50%;
+}
+
+.action-buttons-cont {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 0.6rem;
+}
+
+.action-button {
+  border: none;
+  background-color: white;
+  padding: 8px 23px;
+  margin-right: 11px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.action-a {
+  color: #ff2625;
+  text-decoration: none;
+}
+
+.action-button-icon {
+  /* margin-top: 1px; */
+  margin-right: 3px;
+}
+.action-button:nth-last-of-type(1) {
+  background-color: rgba(109, 109, 110, 0.7);
+  color: white;
+}
+
+.banner-fadeBottom {
+  height: 7rem;
+  background: linear-gradient(
+    180deg,
+    transparent,
+    rgba(37, 37, 37, 0.61),
+    #151414
+  );
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+.bannermovie-container {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  top: 0px;
+  width: 100vw; /* Take full width of the viewport */
+  height: 56.25vw; /* Set the height based on the 16:9 aspect ratio (100 / 16 * 9) */
+  overflow: hidden;
+}
+
+.banner-video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.banner-video iframe {
+  border: none;
+  outline: none;
+}
+
+/* Responsive CSS */
+@media (max-width: 767px) {
+  .main-nav {
+    display: none;
+  }
+
+  .banner-overview {
+    max-width: 100%;
+  }
+}
