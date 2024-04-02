@@ -289,7 +289,7 @@ let navstatus = false;
 function displaynav() {
     const leftcont = document.getElementById("left-cont");
     const mainnav = document.getElementById("main-nav");
-    if (window.outerWidth < 771) {
+    if (window.outerWidth < 773) {
         if (!navstatus) {
             leftcont.classList.add("menubar")
             mainnav.style.display = "flex"
@@ -307,13 +307,13 @@ function displaynav() {
 function hideNavOnResize() {
     const leftcont = document.getElementById("left-cont");
     const mainnav = document.getElementById("main-nav");
-    if (window.outerWidth >= 771) {
+    if (window.outerWidth >= 773) {
         leftcont.classList.remove("menubar")
         mainnav.style.display = "inline-flex"
         navstatus = false;
     }
     else
-        if (window.outerWidth < 771) {
+        if (window.outerWidth < 773) {
             if (!navstatus) {
                 leftcont.classList.add("menubar")
                 mainnav.style.display = "flex"
@@ -358,7 +358,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 behavior: "smooth",
             });
         }
-        if (window.outerWidth < 771) {
+        if (window.outerWidth < 773) {
             leftcont.classList.remove("menubar")
             mainnav.style.display = "none"
             navstatus = false;
