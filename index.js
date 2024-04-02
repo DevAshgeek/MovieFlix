@@ -315,9 +315,9 @@ function hideNavOnResize() {
     else
         if (window.outerWidth < 773) {
             if (!navstatus) {
-                leftcont.classList.add("menubar")
-                mainnav.style.display = "flex"
-                navstatus = true;
+                leftcont.classList.remove("menubar")
+                mainnav.style.display = "none"
+                navstatus = false;
             }
         }
 }
