@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <link rel="stylesheet" href="./index.css" />
-    <script defer src="./index.js" defer></script>
+    <script defer src="./index.js"></script>
     <script
       src="https://kit.fontawesome.com/17bacbcda6.js"
       crossorigin="anonymous"
@@ -14,22 +14,41 @@
 
   <body>
     <header id="header">
-      <div class="container header-cont">
-        <div class="left-cont">
-          <img
-            class="brand-logo"
-            src="./assests/logo1.png"
-            alt="movies logo"
-            width="124px"
-          />
-          <ul class="main-nav">
-            <li class="nav-item">Home</li>
-            <li class="nav-item">TV Shows</li>
-            <li class="nav-item">Movies</li>
-            <li class="nav-item">News & Popular</li>
-            <li class="nav-item">My List</li>
-            <li class="nav-item">Browse by Languages</li>
-          </ul>
+      <div id="header-cont" class="container header-cont">
+        <div class="left-header">
+          <button class="btnnav" onclick="displaynav()">
+            <i class="fa-solid fa-bars fa-xl" style="color: #c01a19"></i>
+          </button>
+          <div id="left-cont" class="left-cont">
+            <a id="hamburgermenu" href="#header"
+              ><img
+                class="brand-logo"
+                src="./assests/logo1.png"
+                alt="movies logo"
+                width="124px"
+            /></a>
+
+            <ul id="main-nav" class="main-nav">
+              <li class="nav-item">
+                <a href="#movies-section-Action">Action</a>
+              </li>
+              <li class="nav-item">
+                <a href="#movies-section-Comedy">Comedy</a>
+              </li>
+              <li class="nav-item">
+                <a href="#movies-section-Drama">Drama</a>
+              </li>
+              <li class="nav-item">
+                <a href="#movies-section-Horror">Horror</a>
+              </li>
+              <li class="nav-item">
+                <a href="#movies-section-TVMovie">TV Movies</a>
+              </li>
+              <li class="nav-item">
+                <a href="#movies-section-Romance">Romance</a>
+              </li>
+            </ul>
+          </div>
         </div>
         <div class="right-cont">
           <ul class="right-nav">
