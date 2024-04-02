@@ -2,6 +2,7 @@
 const apikey = "2b82006d3944a0680c417ddcedda30b8";
 const apiEndpoint = "https://api.themoviedb.org/3";
 const imgPath = "https://image.tmdb.org/t/p/original";
+const imgPathReduced = "https://image.tmdb.org/t/p/w1280";
 const youtubeApiEndpoint = "https://www.googleapis.com/youtube/v3/search";
 const youtubeApikey = "AIzaSyDXAc75ggH4wRDWuwBgsnxPkFUl-X2OeUU";
 
@@ -41,7 +42,12 @@ function buildBannerSection(movie) {
     if (movie.backdrop_path === null || movie.backdrop_path === undefined) {
         bannerCont.style.backgroundImage = `url(https://res.cloudinary.com/dxdboxbyb/image/upload/v1620052094/ayi6tvyiedrlmjiim6yn.png)`
     }
-    bannerCont.style.backgroundImage = `url('${imgPath}${movie.backdrop_path}')`;
+
+    if (window.outerWidth <= 767) {
+        bannerCont.style.backgroundImage = `url('${imgPathReduced}${movie.backdrop_path}')`;
+    } else {
+        bannerCont.style.backgroundImage = `url('${imgPath}${movie.backdrop_path}')`;
+    }
     const div = document.createElement('div');
     let movieTitle = "";
     if (movie.name) {
@@ -55,7 +61,7 @@ function buildBannerSection(movie) {
     <h2 class="banner-title">${movieTitle}</h2>
     <p class="banner-info">ratings: ${movie.vote_average}</p>
     <p class="banner-overview">
-        ${movie.overview && movie.overview.length > 200 ? movie.overview.slice(0, 200).trim() + '...' : movie.overview}</p>
+        ${movie.overview && movie.overview.length > 150 ? movie.overview.slice(0, 150).trim() + '...' : movie.overview}</p>
     <div class="action-buttons-cont">
         <button class="action-button" onclick="searchBannerMovieTrailer('${movieTitle}','${movie.id}')">
             <img
@@ -75,6 +81,7 @@ function buildBannerSection(movie) {
             </a>
         </button>
     </div>`;
+
     div.className = "banner-content container";
     bannerCont.append(div);
 
@@ -137,6 +144,9 @@ function buildMoviesSection(list, categoryName) {
 
     const div = document.createElement('div');
     div.className = "movies-section";
+    let catname = categoryName.split(" ").join("");
+    div.setAttribute("id", `movies-section-${catname}`)
+    console.log(`${categoryName}`)
     div.innerHTML = moviesSectionHtml;
     movieCont.append(div);
 }
@@ -187,6 +197,9 @@ function searchMovieTrailer(movieName, movieId, categoryName) {
         container.innerHTML = "";
     });
 
+    const movierow = document.getElementsByClassName("movie-row");
+
+
     const div = document.createElement('div');
     div.classList.add("trailer-container");
     div.id = `${categoryName}-${movieId}`;
@@ -210,6 +223,7 @@ function searchMovieTrailer(movieName, movieId, categoryName) {
 
     // Clear the current trailer container
     trailerContainer.innerHTML = "";
+
 
     fetch(apiPaths.searchOnYoutube(movieName))
         .then(res => res.json())
@@ -241,6 +255,8 @@ function searchBannerMovieTrailer(movieName, movieId) {
     const movieContainer = document.createElement('div');
     movieContainer.classList.add("bannermovie-container");
 
+    const headercont = this.document.getElementById('header-cont');
+
     const allTrailerContainers = document.querySelectorAll('.category-container');
     allTrailerContainers.forEach(container => {
         container.style.display = "none";
@@ -264,18 +280,91 @@ function searchBannerMovieTrailer(movieName, movieId) {
 
             const bannerCont = document.getElementById('banner-section');
             bannerCont.append(movieContainer);
+
         })
         .catch(err => console.log(err));
 }
+
+let navstatus = false;
+function displaynav() {
+    const leftcont = document.getElementById("left-cont");
+    const mainnav = document.getElementById("main-nav");
+    if (window.outerWidth < 771) {
+        if (!navstatus) {
+            leftcont.classList.add("menubar")
+            mainnav.style.display = "flex"
+            navstatus = true;
+        }
+        else {
+            leftcont.classList.remove("menubar")
+            mainnav.style.display = "none"
+            navstatus = false;
+        }
+    }
+
+}
+
+function hideNavOnResize() {
+    const leftcont = document.getElementById("left-cont");
+    const mainnav = document.getElementById("main-nav");
+    if (window.outerWidth >= 771) {
+        leftcont.classList.remove("menubar")
+        mainnav.style.display = "inline-flex"
+        navstatus = false;
+    }
+    else
+        if (window.outerWidth < 771) {
+            if (!navstatus) {
+                leftcont.classList.add("menubar")
+                mainnav.style.display = "flex"
+                navstatus = true;
+            }
+        }
+}
+
 
 
 window.addEventListener("load", () => {
     init();
     window.addEventListener('scroll', function () {
-        const header = this.document.getElementById('header');
-        if (this.window.scrollY > 20) {
+        const header = this.document.getElementById('header-cont');
+        if (this.window.scrollY > 30) {
             header.classList.add('black-bg')
         }
         else header.classList.remove('black-bg');
     })
 })
+
+window.addEventListener("resize", () => {
+    hideNavOnResize();
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    const links = document.querySelectorAll('a[href^="#"]');
+    const leftcont = document.getElementById("left-cont");
+    const mainnav = document.getElementById("main-nav");
+    for (const link of links) {
+        link.addEventListener("click", smoothScroll);
+    }
+
+    function smoothScroll(e) {
+        e.preventDefault();
+        const targetId = this.getAttribute("href");
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+            const offsetTop = targetElement.offsetTop;
+            window.scrollTo({
+                top: offsetTop,
+                behavior: "smooth",
+            });
+        }
+        if (window.outerWidth < 771) {
+            leftcont.classList.remove("menubar")
+            mainnav.style.display = "none"
+            navstatus = false;
+        }
+
+
+    }
+});
+
