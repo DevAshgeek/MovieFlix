@@ -384,7 +384,7 @@ header {
 }
 @media (min-width: 1570px) and (max-width: 2350px) {
   header {
-    height: 7vh;
+    height: 7.5vh;
   }
   .banner-title {
     font-size: 76px;
@@ -394,8 +394,8 @@ header {
 }
 
 @media (max-width: 1569px) and (min-width: 1200px) {
-  header {
-    height: 6.5vh;
+  .header-cont {
+    height: 7.5vh;
   }
 
   .banner-content {
@@ -427,8 +427,8 @@ header {
 }
 
 @media (max-width: 1200px) and (min-width: 773px) {
-  header {
-    height: 6.5vh;
+  .header-cont {
+    height: 7vh;
   }
 
   .banner-overview {
@@ -466,18 +466,21 @@ header {
     padding: 0;
   }
 
-  header {
-    height: 6vh;
+  .header-cont {
+    height: 6.8vh;
   }
 
   .main-nav {
     list-style: none;
     flex-direction: column;
     display: none;
+  }
 
-    .nav-item {
-      margin-top: 20px;
-    }
+  .right-navitem {
+    margin-right: 12px;
+    width: 28px;
+    height: 28px;
+    padding: 1px 0.8px;
   }
 
   .btnnav {
@@ -491,19 +494,19 @@ header {
   }
 
   .banner-content {
-    padding-top: 12vw;
+    padding-top: 10vw;
   }
 
   .banner-title {
     font-size: 30px;
     line-height: 1.1;
     max-width: 90%;
-    margin-bottom: 1.66vw;
+    margin-bottom: 1.5vw;
   }
 
   .banner-info {
-    margin-bottom: 1.93vw;
-    font-size: 20px;
+    margin-bottom: 1.7vw;
+    font-size: 15px;
     font-weight: 600;
     line-height: 1.1;
   }
@@ -513,6 +516,6 @@ header {
   }
 
   .banner-fadeBottom {
-    height: 3rem;
+    height: 2.3rem;
   }
 }
