@@ -58,7 +58,7 @@ function buildBannerSection(movie) {
     }
 
     div.innerHTML = `
-    <h2 class="banner-title">${movieTitle && movieTitle.length > 40 ? movieTitle.slice(0, 30).trim() + '.' : movieTitle}</h2>
+    <h2 class="banner-title">${movieTitle && movieTitle.length > 40 ? movieTitle.slice(0, 30).trim() + '..' : movieTitle}</h2>
     <p class="banner-info">ratings: ${movie.vote_average}</p>
     <p class="banner-overview">
         ${movie.overview && movie.overview.length > 150 ? movie.overview.slice(0, 150).trim() + '...' : movie.overview}</p>
