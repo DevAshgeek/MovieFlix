@@ -476,6 +476,9 @@ header {
     display: none;
   }
 
+  .nav-item {
+    margin-top: 20px;
+  }
   .right-navitem {
     margin-right: 12px;
     width: 28px;
