@@ -80,7 +80,10 @@ function buildBannerSection(movie) {
             />More Info
             </a>
         </button>
-    </div>`;
+           </div>
+    `;
+
+    //  <button class="fullscreen-button" onclick="toggleBannerFullscreen()">Fullscreen</button>
 
     div.className = "banner-content container";
     bannerCont.append(div);
@@ -127,6 +130,8 @@ function fetchAndBuildMovieSection(fetchUrl, categoryName) {
 function buildMoviesSection(list, categoryName) {
     const movieCont = document.getElementById("movies-container");
 
+    const updatedCategoryName = categoryName.split(' ').join('').toLowerCase();
+
     const moviesSectionHtml = `
    <h2 class="movies-section-heading">
         ${categoryName}
@@ -137,7 +142,7 @@ function buildMoviesSection(list, categoryName) {
       <div class="movies-row">
         ${list.map(item => buildMovieItem(item, categoryName)).join('')}
       </div>
-      <div class="category-container" id="category-container-${categoryName}"></div>
+      <div class="category-container" id="category-container-${updatedCategoryName}"></div>
     </div>
     `;
 
@@ -187,7 +192,8 @@ function buildMovieItem(item, categoryName) {
 function searchMovieTrailer(movieName, movieId, categoryName) {
     if (!movieName || !categoryName || !movieId) return;
 
-    const categoryContainerId = `category-container-${categoryName}`;
+    const updatedCategoryName = categoryName.split(' ').join('').toLowerCase();
+    const categoryContainerId = `category-container-${updatedCategoryName}`;
     const categoryContainer = document.getElementById(categoryContainerId);
     categoryContainer.innerHTML = "";
 
@@ -199,14 +205,13 @@ function searchMovieTrailer(movieName, movieId, categoryName) {
 
     const movierow = document.getElementsByClassName("movie-row");
 
-
     const div = document.createElement('div');
     div.classList.add("trailer-container");
-    div.id = `${categoryName}-${movieId}`;
+    div.id = `${updatedCategoryName}-${movieId}`;
     // let trailerContainer = `<div class="trailer-container" id="${categoryName}-${item.id}"></div>`
     categoryContainer.appendChild(div);
 
-    const trailerContainerId = `${categoryName}-${movieId}`;
+    const trailerContainerId = `${updatedCategoryName}-${movieId}`;
     const trailerContainer = document.getElementById(trailerContainerId);
 
     if (!trailerContainer) {
@@ -223,8 +228,6 @@ function searchMovieTrailer(movieName, movieId, categoryName) {
 
     // Clear the current trailer container
     trailerContainer.innerHTML = "";
-
-
     fetch(apiPaths.searchOnYoutube(movieName))
         .then(res => res.json())
         .then(res => {
@@ -234,14 +237,20 @@ function searchMovieTrailer(movieName, movieId, categoryName) {
 
             const iframeContainer = document.createElement('div');
             iframeContainer.setAttribute('class', 'youtube-video');
+            iframeContainer.innerHTML = `<div id= "movie${updatedCategoryName}-${movieId}" class="video-div"><iframe width="100%" height="100%" src="https://www.youtube.com/embed/${bestResult.id.videoId}?autoplay=1&controls=0"></iframe></div>`
 
+            const trailerdiv = document.createElement('div');
+            const fullscreenbtn = document.createElement('button');
 
+            fullscreenbtn.classList.add("fullscreen-button")
+            fullscreenbtn.innerHTML = "Fullscreen"
+            fullscreenbtn.onclick = function () {
+                toggleFullScreen(`${updatedCategoryName}-${movieId}`);
+            };
 
-            iframeContainer.innerHTML = `<iframe width="100%" height="100%" src="https://www.youtube.com/embed/${bestResult.id.videoId}?autoplay=1&controls=0"></iframe>`
-            // trailercontainer.appendChild(div);
-
-
-            trailerContainer.appendChild(iframeContainer);
+            iframeContainer.appendChild(fullscreenbtn);
+            trailerdiv.appendChild(iframeContainer);
+            trailerContainer.appendChild(trailerdiv);
             trailerContainer.style.display = 'block';
             categoryContainer.style.display = "block";
 
@@ -280,6 +289,15 @@ function searchBannerMovieTrailer(movieName, movieId) {
 
             const bannerCont = document.getElementById('banner-section');
             bannerCont.append(movieContainer);
+
+
+            const fullscreenBtn = document.createElement('button');
+            fullscreenBtn.classList.add("fullscreen-button")
+            fullscreenBtn.innerHTML = "Fullscreen"
+            fullscreenBtn.onclick = toggleBannerFullScreen;
+
+            bannerCont.appendChild(fullscreenBtn);
+
 
         })
         .catch(err => console.log(err));
@@ -324,12 +342,158 @@ function hideNavOnResize() {
 
 
 
+//toggle banner fullscreen
+
+function toggleBannerFullScreen() {
+    const bannerElement = document.getElementById('banner-section');
+    const bannerVideoElement = bannerElement.querySelector('.banner-video');
+    const fullscreenBtn = bannerElement.querySelector('.fullscreen-button');
+
+    if (!document.fullscreenElement && !document.mozFullScreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement) {
+        // Enter fullscreen mode
+        if (bannerElement.requestFullscreen) {
+            bannerElement.requestFullscreen();
+        } else if (bannerElement.mozRequestFullScreen) {
+            bannerElement.mozRequestFullScreen();
+        } else if (bannerElement.webkitRequestFullscreen) {
+            bannerElement.webkitRequestFullscreen();
+        } else if (bannerElement.msRequestFullscreen) {
+            bannerElement.msRequestFullscreen();
+        }
+
+        // Hide fullscreen button
+        fullscreenBtn.style.display = "none";
+    } else {
+        // Exit fullscreen mode
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.mozCancelFullScreen) {
+            document.mozCancelFullScreen();
+        } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen();
+        } else if (document.msExitFullscreen) {
+            document.msExitFullscreen();
+        }
+
+        // Show fullscreen button
+        fullscreenBtn.style.display = "block";
+    }
+
+    const updateBannerVideoSize = () => {
+        const isFullscreen =
+            document.fullscreenElement ||
+            document.webkitFullscreenElement ||
+            document.mozFullScreenElement ||
+            document.msFullscreenElement;
+
+        if (!isFullscreen) {
+            // Update video size when exiting fullscreen
+            bannerVideoElement.style.height = "56.25vh";
+        } else {
+            // Update video size when entering fullscreen
+            bannerVideoElement.style.height = "100vh";
+        }
+    };
+
+    // Listen for fullscreen change event to update video size
+    document.addEventListener("fullscreenchange", updateBannerVideoSize);
+    document.addEventListener("webkitfullscreenchange", updateBannerVideoSize);
+    document.addEventListener("mozfullscreenchange", updateBannerVideoSize);
+    document.addEventListener("MSFullscreenChange", updateBannerVideoSize);
+}
+
+
+
+function toggleFullScreen(elementId) {
+    const element = document.getElementById(elementId);
+    const movieElement = document.getElementById(`movie${elementId}`);
+    const movieiframe = movieElement.firstChild;
+    const fullscreenbtn = document.querySelector(`#${elementId} .fullscreen-button`);
+
+    if (!document.fullscreenElement && !document.mozFullScreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement) {
+        // Enter fullscreen mode
+
+        // movieElement.style.height = "100vh";
+
+        if (element.requestFullscreen) {
+            element.requestFullscreen();
+        } else if (element.mozRequestFullScreen) {
+            element.mozRequestFullScreen();
+        } else if (element.webkitRequestFullscreen) {
+            element.webkitRequestFullscreen();
+        } else if (element.msRequestFullscreen) {
+            element.msRequestFullscreen();
+        }
+
+        // Hide fullscreen button
+        fullscreenbtn.style.display = "none";
+    } else {
+        // Exit fullscreen mode
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.mozCancelFullScreen) {
+            document.mozCancelFullScreen();
+        } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen();
+        } else if (document.msExitFullscreen) {
+            document.msExitFullscreen();
+        }
+
+        // movieElement.style.height = "56.25vh";
+        fullscreenbtn.style.display = "block";
+
+    }
+
+    const updateVideoSize = () => {
+        const isFullscreen =
+            document.fullscreenElement ||
+            document.webkitFullscreenElement ||
+            document.mozFullScreenElement ||
+            document.msFullscreenElement;
+
+        if (!isFullscreen) {
+            movieElement.style.height = "56.25vh";
+            movieElement.style.width = "100%";
+            movieiframe.style.height = "56.25vh";
+            movieiframe.style.width = "100%";
+
+        }
+        else if (isFullscreen) {
+            movieiframe.style.height = "100vh";
+            movieiframe.style.width = "100vw";
+        }
+    };
+
+    // Listen for fullscreen change event to update video size
+    document.addEventListener("fullscreenchange", updateVideoSize);
+    document.addEventListener("webkitfullscreenchange", updateVideoSize);
+    document.addEventListener("mozfullscreenchange", updateVideoSize);
+    document.addEventListener("MSFullscreenChange", updateVideoSize);
+}
+
+// Add event listener for fullscreen change
+document.addEventListener("fullscreenchange", function () {
+    const fullscreenElement = document.fullscreenElement ||
+        document.webkitFullscreenElement ||
+        document.mozFullScreenElement ||
+        document.msFullscreenElement;
+
+    // If not in fullscreen mode, show the fullscreen button
+    if (!fullscreenElement) {
+        const fullscreenbtns = document.querySelectorAll(".fullscreen-button");
+        fullscreenbtns.forEach(btn => {
+            btn.style.display = "block";
+        });
+    }
+});
+
+
 window.addEventListener("load", () => {
     init();
     window.addEventListener('scroll', function () {
         const header = this.document.getElementById('header-cont');
         if (this.window.scrollY > 30) {
-            header.classList.add('black-bg')
+            header.classList.add('black-bg');
         }
         else header.classList.remove('black-bg');
     })
