@@ -388,10 +388,11 @@ function toggleBannerFullScreen() {
 
         if (!isFullscreen) {
             // Update video size when exiting fullscreen
-            bannerVideoElement.style.height = "56.25vh";
+            bannerVideoElement.style.height = "56.25vw";
         } else {
             // Update video size when entering fullscreen
             bannerVideoElement.style.height = "100vh";
+            bannerVideoElement.style.width = "100%";
         }
     };
 
