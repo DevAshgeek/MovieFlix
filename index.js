@@ -391,8 +391,9 @@ function toggleBannerFullScreen() {
             bannerVideoElement.style.height = "56.25vw";
         } else {
             // Update video size when entering fullscreen
-            bannerVideoElement.style.height = "100vh";
+            bannerVideoElement.style.height = "56.25vw";
             bannerVideoElement.style.width = "100%";
+            bannerElement.style.backgroundSize = "contain";
         }
     };
 
@@ -453,9 +454,9 @@ function toggleFullScreen(elementId) {
             document.msFullscreenElement;
 
         if (!isFullscreen) {
-            movieElement.style.height = "56.25vh";
+            movieElement.style.height = "56.25vw";
             movieElement.style.width = "100%";
-            movieiframe.style.height = "56.25vh";
+            movieiframe.style.height = "56.25vw";
             movieiframe.style.width = "100%";
 
         }
