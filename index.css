@@ -178,12 +178,12 @@ header {
   display: flex;
   justify-content: center;
   width: 100vw; /* Take full width of the viewport */
-  height: 56.25vh; /* Set the height based on the 16:9 aspect ratio (100 / 16 * 9) */
+  height: 56.25v; /* Set the height based on the 16:9 aspect ratio (100 / 16 * 9) */
   overflow: hidden;
 }
 
 .youtube-video {
-  object-fit: contain;
+  object-fit: cover;
   position: relative;
   top: 0px;
   /* object-fit: contain; */
@@ -193,7 +193,7 @@ header {
   position: relative;
   top: 0;
   width: 100vw;
-  height: 56.25vh;
+  height: 56.25vw;
   margin: 0;
   border: 0;
 }
@@ -360,6 +360,8 @@ header {
   height: 56.25vw; /* Set the height based on the 16:9 aspect ratio (100 / 16 * 9) */
   overflow: hidden;
 }
+
+/* Add these CSS rules to your stylesheet */
 
 .banner-video {
   width: 100%;
